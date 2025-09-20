@@ -46,8 +46,6 @@ export const createOrder = async (req, reply) => {
   }
 };
 
-
-
 export const confirmOrder = async (req, reply) => {
   try {
     const { orderId } = req.params;
@@ -88,17 +86,14 @@ export const confirmOrder = async (req, reply) => {
   }
 };
 
-
-
-
 export const updateOrderStatus = async (req, reply) => {
   try {
     const { orderId } = req.params;
-    
+
     const { status, deliveryPersonLocation } = req.body;
-    
+
     const { userId } = req.user;
-   
+
     const deliveryPerson = await DeliveryPartner.findById(userId);
 
     if (!deliveryPerson) {
@@ -131,7 +126,6 @@ export const updateOrderStatus = async (req, reply) => {
   }
 };
 
-
 export const getOrders = async (req, reply) => {
   try {
     const { status, customerId, deliveryPartnerId, branchId } = req.query;
@@ -160,5 +154,22 @@ export const getOrders = async (req, reply) => {
       .send({ message: "Failed to retrieve orders  ", error });
   }
 };
+export const getOrderById = async (req, reply) => {
+  try {
+    const { orderId } = req.params;
 
+    const order = await Order.findById(orderId).populate(
+      "customer branch items.item deliveryPartner"
+    );
 
+    if (!order) {
+      return reply.status(404).send({ message: "Order not found" });
+    }
+
+    return reply.send(order);
+  } catch (error) {
+    return reply
+      .status(500)
+      .send({ message: "Failed to retrieve order 2 one", error });
+  }
+};
