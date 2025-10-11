@@ -4,8 +4,6 @@ export const updateUser = async (req, reply) => {
   try {
     const { userId } = req.user;
     const updateData = req.body;
-
-    console.log(userId, updateData);
     let user =
       (await Customer.findById(userId)) ||
       (await DeliveryPartner.findById(userId));

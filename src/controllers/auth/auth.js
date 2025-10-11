@@ -91,9 +91,9 @@ export const refreshToken = async (req, reply) => {
 
     let user;
 
-    console.log(decoded);
     if (decoded.role === "Customer") {
       user = await Customer.findById(decoded.userId);
+
     } else if (decoded.role === "DeliveryPartner") {
       user = await DeliveryPartner.findById(decoded.userId);
     } else {
@@ -121,6 +121,7 @@ export const fetchUser = async (req, reply) => {
 
   let user;
 
+ 
   try {
     if (role === "Customer") {
       user = await Customer.findById(userId);

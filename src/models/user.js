@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-// Base user schema
 
+// Base user schema
 const userSchema = new mongoose.Schema({
   name: { type: String },
   role: {
@@ -26,6 +26,9 @@ const customerSchema = new mongoose.Schema({
 // deliveryPartner schema
 
 
+//console.log(customerSchema.obj)
+
+//console.log(userSchema.obj)
 const deliveryPartnerSchema = new mongoose.Schema({
   ...userSchema.obj,
   email: { type: String, required: true, unique: true },
